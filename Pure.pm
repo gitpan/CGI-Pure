@@ -22,7 +22,7 @@ Readonly::Scalar my $BLOCK_SIZE => 4_096;
 Readonly::Array my @PAR_SEP => (q{&}, q{;});
 
 # Version.
-our $VERSION = 0.03;
+our $VERSION = 0.04;
 
 # Constructor.
 sub new {
@@ -655,18 +655,18 @@ CGI::Pure - Common Gateway Interface Class.
 
 =over 8
 
-=item B<new(%parameters)>
+=item C<new(%parameters)>
 
  Constructor
 
 =over 8
 
-=item * B<disable_upload>
+=item * C<disable_upload>
 
  Disables file upload.
  Default value is 1.
 
-=item * B<init>
+=item * C<init>
 
  Initialization variable.
  May be:
@@ -675,51 +675,51 @@ CGI::Pure - Common Gateway Interface Class.
  - Query string.
  Default is undef.
 
-=item * B<par_sep>
+=item * C<par_sep>
 
  Parameter separator.
  Default value is '&'.
  Possible values are '&' or ';'.
 
-=item * B<post_max>
+=item * C<post_max>
 
  Maximal post length.
  -1 means no limit.
  Default value is 102400kB
 
-=item * B<save_query_data>
+=item * C<save_query_data>
 
  Flag, that means saving query data.
  When is enable, is possible use query_data method.
  Default value is 0.
 
-=item * B<utf8>
+=item * C<utf8>
 
  Flag, that means utf8 CGI parameters handling.
  Default is 1.
 
 =back
 
-=item B<append_param($param, [@values])>
+=item C<append_param($param, [@values])>
 
  Append param value.
  Returns all values for param.
 
-=item B<clone($class)>
+=item C<clone($class)>
 
  Clone class to my class.
 
-=item B<delete_param($param)>
+=item C<delete_param($param)>
 
  Delete param.
  Returns undef, when param doesn't exist.
  Returns 1, when param was deleted.
 
-=item B<delete_all_params()>
+=item C<delete_all_params()>
 
  Delete all params.
 
-=item B<param([$param], [@values])>
+=item C<param([$param], [@values])>
 
  Returns or sets parameters in CGI.
  params() returns all parameters name.
@@ -727,16 +727,16 @@ CGI::Pure - Common Gateway Interface Class.
  params('param', 'val1', 'val2') sets parameter 'param' to 'val1' and 'val2'
  values.
 
-=item B<query_data()>
+=item C<query_data()>
 
  Gets query data from server.
  There is possible only for enabled 'save_data' flag.
 
-=item B<query_string()>
+=item C<query_string()>
 
  Returns actual query string.
 
-=item B<upload($filename, [$write_to])>
+=item C<upload($filename, [$write_to])>
 
  Upload file from tmp.
  upload() returns array of uploaded filenames.
@@ -744,7 +744,7 @@ CGI::Pure - Common Gateway Interface Class.
  upload($filename, $write_to) uploads temporary '$filename' file to
  '$write_to' file.
 
-=item B<upload_info($filename, [$info])>
+=item C<upload_info($filename, [$info])>
 
  Returns informations from uploaded files.
  upload_info() returns array of uploaded files.
@@ -755,7 +755,28 @@ CGI::Pure - Common Gateway Interface Class.
 
 =head1 ERRORS
 
- TODO
+ new():
+         400 Malformed multipart, no terminating boundary.
+         400 No boundary supplied for multipart/form-data.
+         405 Not Allowed - File uploads are disabled.
+         413 Request entity too large: %s bytes on STDIN exceeds post_max !
+         500 Bad read! wanted %s, got %s.
+         500 IO::File can\'t create new temp_file.
+         500 IO::File is not available %s.
+         Bad parameter separator '%s'.
+         From Class::Utils::set_params():
+                 Unknown parameter '%s'.
+
+ upload():
+         Cannot close file '%s': %s.
+         Cannot write file '%s': %s.
+         File uploads only work if you specify enctype="multipart/form-data" in your form.
+         No filehandle for '%s'. Are uploads enabled (disable_upload = 0)? Is post_max big enough?
+         No filename submitted for upload to '$writefile'.
+
+ upload_info():
+         File uploads only work if you specify enctype="multipart/form-data" in your form.
+
 
 =head1 EXAMPLE1
 
@@ -823,10 +844,10 @@ L<http://skim.cz>
 
 =head1 LICENSE AND COPYRIGHT
 
-BSD license.
+BSD 2-Clause License
 
 =head1 VERSION
 
-0.03
+0.04
 
 =cut
